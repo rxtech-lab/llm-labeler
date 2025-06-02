@@ -1,0 +1,37 @@
+name: "LLM Issue Labeler"
+description: "Automatically labels and types GitHub issues using OpenAI"
+author: "Your Name"
+
+inputs:
+  github-token:
+    description: "GitHub token for API access"
+    required: true
+  openai-api-key:
+    description: "OpenAI API key"
+    required: true
+  openai-endpoint:
+    description: "OpenAI API endpoint"
+    required: false
+    default: "https://api.openai.com/v1"
+  openai-model:
+    description: "OpenAI model to use"
+    required: false
+    default: "gpt-4o-mini"
+  custom-labels:
+    description: 'JSON string of custom labels with descriptions (e.g., [{"label": "security", "description": "Security related issues"}])'
+    required: false
+    default: "[]"
+
+outputs:
+  labels-applied:
+    description: "Labels that were applied to the issue"
+  type-applied:
+    description: "Type that was applied to the issue"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "tag"
+  color: "blue"

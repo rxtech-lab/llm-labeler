@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- use pnpm for package management
+- source code in /src folder
+- use typescript
+- this is an GitHub Action project output dir is /dist
+- split code into smaller function and add comments to each function

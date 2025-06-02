@@ -1,0 +1,32 @@
+{
+  "name": "llm-labeler",
+  "version": "1.0.0",
+  "description": "GitHub Action to automatically label and type issues using OpenAI",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rspack build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "rspack build --mode=production"
+  },
+  "keywords": [
+    "github-action",
+    "openai",
+    "labeling",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/rest": "^20.0.2",
+    "openai": "^4.28.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@rspack/cli": "^1.3.13",
+    "@rspack/core": "^1.3.13",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.8.3"
+  }
+}
