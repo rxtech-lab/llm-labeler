@@ -12,6 +12,8 @@ jobs:
       contents: read
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Label Issue with LLM
         uses: ./ # Use ./ for local action, or your-username/repo-name@v1 for published action
         with:
