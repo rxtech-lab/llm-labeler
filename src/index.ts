@@ -1,6 +1,10 @@
 import * as core from "@actions/core";
 import { getActionInputs } from "./inputs";
-import { getIssueInfo, updateIssueLabels, ensureLabelsExist } from "./github";
+import {
+  getIssueInfo,
+  updateIssueLabelsAndType,
+  ensureLabelsExist,
+} from "./github";
 import { analyzeIssue } from "./openai";
 import { DEFAULT_LABELS, ISSUE_TYPES } from "./types";
 
@@ -55,7 +59,7 @@ async function run(): Promise<void> {
     }
 
     // Apply labels and type to the issue
-    await updateIssueLabels(
+    await updateIssueLabelsAndType(
       inputs.githubToken,
       issueInfo.number,
       validLabels,

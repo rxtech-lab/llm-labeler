@@ -1,6 +1,7 @@
 import * as github from "@actions/github";
 import * as core from "@actions/core";
 import { IssueInfo } from "./types";
+import { Octokit } from "@octokit/rest";
 
 /**
  * Extracts issue information from GitHub context
@@ -30,36 +31,23 @@ export function getIssueInfo(): IssueInfo {
  * @param labels Array of labels to apply
  * @param type Issue type to set (will be converted to a label)
  */
-export async function updateIssueLabels(
+export async function updateIssueLabelsAndType(
   githubToken: string,
   issueNumber: number,
   labels: string[],
   type: string
 ): Promise<void> {
-  const octokit = github.getOctokit(githubToken);
+  const octokit = new Octokit({ auth: githubToken });
   const context = github.context;
 
   try {
-    // Get current labels to preserve any existing ones not managed by this action
-    const { data: currentIssue } = await octokit.rest.issues.get({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      issue_number: issueNumber,
-    });
-
-    // Remove existing type labels (Bug, Feature, Task) and add the new type
-    const existingLabels = currentIssue.labels
-      .map((label) => (typeof label === "string" ? label : label.name))
-      .filter((label) => label && !["Bug", "Feature", "Task"].includes(label));
-
-    // Combine existing labels (excluding type labels) with new labels and type
-    const allLabels = [...new Set([...existingLabels, ...labels, type])];
-
-    await octokit.rest.issues.setLabels({
+    const allLabels = [...new Set(labels)];
+    await octokit.rest.issues.update({
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: issueNumber,
       labels: allLabels.filter((label) => label !== undefined),
+      type: type,
     });
 
     core.info(`Successfully applied labels: ${allLabels.join(", ")}`);

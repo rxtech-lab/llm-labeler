@@ -32,7 +32,7 @@ export async function analyzeIssue(
   try {
     core.info("Sending request to OpenAI for issue analysis...");
 
-    const completion = await openai.beta.chat.completions.parse({
+    const completion = await openai.chat.completions.parse({
       model: inputs.openaiModel,
       messages: [
         { role: "system", content: systemPrompt },
